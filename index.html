@@ -527,6 +527,9 @@
                     <button onclick="resetDefaults()">
                         🔄 Réinitialiser aux valeurs par défaut
                     </button>
+                    <button onclick="downloadPDF()" style="background: #4CAF50; color: white; margin-left: 10px;">
+                        📥 Télécharger le rapport PDF
+                    </button>
                 </div>
             </div>
         </header>
@@ -1466,6 +1469,27 @@
             document.getElementById('dureeMois').value = 24;
             document.getElementById('apportInitial').value = 0;
             updateCalculations();
+        }
+        
+        function downloadPDF() {
+            // Préparer l'impression
+            const originalTitle = document.title;
+            document.title = 'Rapport Art Leasing - ' + formatEuro(calculations.valeur_extraite);
+            
+            // Afficher tous les onglets pour l'impression
+            const contents = document.querySelectorAll('.tab-content');
+            contents.forEach(content => {
+                content.style.display = 'block';
+            });
+            
+            // Lancer l'impression
+            window.print();
+            
+            // Restaurer l'affichage après impression
+            setTimeout(() => {
+                document.title = originalTitle;
+                showTab(0); // Retourner à l'onglet actif
+            }, 100);
         }
         
         function showTab(index) {
