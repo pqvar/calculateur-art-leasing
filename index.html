@@ -427,7 +427,7 @@
                 color: #666 !important;
             }
             
-            /* Forcer l'affichage de tous les onglets */
+            /* Forcer l'affichage de tous les onglets SEULEMENT EN IMPRESSION */
             .tab-content {
                 display: block !important;
                 page-break-before: always;
@@ -464,7 +464,7 @@
             
             /* Masquer les graphiques (trop lourds pour PDF) */
             .chart-container {
-                display: none;
+                display: none !important;
             }
             
             /* Optimiser les tableaux */
@@ -476,6 +476,17 @@
             /* Ajouter des marges de page */
             @page {
                 margin: 2cm;
+            }
+        }
+        
+        /* Styles NORMAUX - en dehors de @media print */
+        @media screen {
+            .tab-content {
+                display: none;
+            }
+            
+            .tab-content.active {
+                display: block;
             }
         }
     </style>
@@ -491,33 +502,40 @@
                     <div class="grid-2">
                         <div>
                             <label>Résultat annuel de la société :</label>
-                            <input type="number" id="resultatAnnuel" value="30000" step="1000" onchange="updateCalculations()">
+                            <input type="number" id="resultatAnnuel" value="" step="1000" 
+                                placeholder="Ex: 30000" oninput="updateCalculations()" onchange="updateCalculations()">
                         </div>
                         <div>
                             <label>Valeur de l'œuvre à la revente :</label>
-                            <input type="number" id="valeurOeuvre" value="30000" step="1000" onchange="updateCalculations()">
+                            <input type="number" id="valeurOeuvre" value="" step="1000" 
+                                placeholder="Ex: 30000" oninput="updateCalculations()" onchange="updateCalculations()">
                         </div>
                     </div>
                     <div class="grid-5">
                         <div>
                             <label style="font-size: 0.9em;">Loyer mensuel (€) :</label>
-                            <input type="number" id="loyerMensuel" value="1600" step="50" min="0" onchange="updateCalculations()">
+                            <input type="number" id="loyerMensuel" value="" step="50" min="0" 
+                                placeholder="Ex: 1600" oninput="updateCalculations()" onchange="updateCalculations()">
                         </div>
                         <div>
                             <label style="font-size: 0.9em;">Durée (mois) :</label>
-                            <input type="number" id="dureeMois" value="24" step="1" min="12" max="60" onchange="updateCalculations()">
+                            <input type="number" id="dureeMois" value="24" step="1" min="12" max="60" 
+                                placeholder="24" oninput="updateCalculations()" onchange="updateCalculations()">
                         </div>
                         <div>
                             <label style="font-size: 0.9em;">Apport initial (€) :</label>
-                            <input type="number" id="apportInitial" value="0" step="500" min="0" onchange="updateCalculations()">
+                            <input type="number" id="apportInitial" value="0" step="500" min="0" 
+                                placeholder="0" oninput="updateCalculations()" onchange="updateCalculations()">
                         </div>
                         <div>
                             <label style="font-size: 0.9em;">Taux IS (%) :</label>
-                            <input type="number" id="tauxIS" value="25" step="1" min="0" max="100" onchange="updateCalculations()">
+                            <input type="number" id="tauxIS" value="25" step="1" min="0" max="100" 
+                                placeholder="25" oninput="updateCalculations()" onchange="updateCalculations()">
                         </div>
                         <div>
                             <label style="font-size: 0.9em;">Taxe div. (%) :</label>
-                            <input type="number" id="tauxDividendes" value="30" step="1" min="0" max="100" onchange="updateCalculations()">
+                            <input type="number" id="tauxDividendes" value="30" step="1" min="0" max="100" 
+                                placeholder="30" oninput="updateCalculations()" onchange="updateCalculations()">
                         </div>
                     </div>
                     <div class="info-box">
@@ -1474,13 +1492,10 @@
         function downloadPDF() {
             // Préparer l'impression
             const originalTitle = document.title;
-            document.title = 'Rapport Art Leasing - ' + formatEuro(calculations.valeur_extraite);
+            document.title = 'Rapport Art Leasing - ' + formatEuro(calculations.valeur_extraite || 0);
             
-            // Afficher tous les onglets pour l'impression
-            const contents = document.querySelectorAll('.tab-content');
-            contents.forEach(content => {
-                content.style.display = 'block';
-            });
+            // Ajouter une classe pour le mode impression
+            document.body.classList.add('print-mode');
             
             // Lancer l'impression
             window.print();
@@ -1488,7 +1503,7 @@
             // Restaurer l'affichage après impression
             setTimeout(() => {
                 document.title = originalTitle;
-                showTab(0); // Retourner à l'onglet actif
+                document.body.classList.remove('print-mode');
             }, 100);
         }
         
@@ -1502,8 +1517,9 @@
             tabs[index].classList.add('active');
             contents[index].classList.add('active');
             
+            // Initialiser les graphiques si c'est l'onglet graphiques
             if (index === 5) {
-                initCharts();
+                setTimeout(() => initCharts(), 100);
             }
         }
         
