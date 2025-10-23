@@ -84,12 +84,6 @@
             margin-bottom: 15px;
         }
         
-        .grid-3 {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            gap: 15px;
-        }
-        
         .grid-5 {
             display: grid;
             grid-template-columns: repeat(5, 1fr);
@@ -108,16 +102,19 @@
             display: flex;
             background: #f8f9fa;
             border-bottom: 2px solid #e0e0e0;
+            flex-wrap: wrap;
         }
         
         .tab {
             flex: 1;
-            padding: 20px;
+            min-width: 150px;
+            padding: 20px 10px;
             text-align: center;
             cursor: pointer;
             font-weight: 600;
             transition: all 0.3s;
             border-bottom: 3px solid transparent;
+            font-size: 0.9em;
         }
         
         .tab:hover {
@@ -364,6 +361,14 @@
             margin: 20px 0;
             border-radius: 5px;
         }
+
+        .info-banner {
+            background: #e3f2fd;
+            border-left: 5px solid #2196F3;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
         
         @media (max-width: 768px) {
             .comparison-cards,
@@ -372,13 +377,17 @@
             }
             
             .grid-2,
-            .grid-3,
             .grid-5 {
                 grid-template-columns: 1fr;
             }
             
             h1 {
                 font-size: 1.8em;
+            }
+
+            .tab {
+                font-size: 0.8em;
+                padding: 15px 5px;
             }
         }
     </style>
@@ -387,7 +396,7 @@
     <div class="container">
         <header>
             <h1>🎨 Défiscalisation par l'Art Leasing</h1>
-            <p class="subtitle">Comparaison précise : Résultat nécessaire</p>
+            <p class="subtitle">Analyse exhaustive : Double comparaison</p>
             
             <div class="controls">
                 <div>
@@ -435,41 +444,152 @@
         </header>
         
         <div class="tabs">
-            <div class="tab active" onclick="showTab(0)">📊 Comparaison</div>
-            <div class="tab" onclick="showTab(1)">🎨 Art Leasing</div>
-            <div class="tab" onclick="showTab(2)">💰 Dividendes Équivalents</div>
-            <div class="tab" onclick="showTab(3)">📈 Graphiques</div>
+            <div class="tab active" onclick="showTab(0)">📊 Vue Globale</div>
+            <div class="tab" onclick="showTab(1)">🎯 Résultat Nécessaire</div>
+            <div class="tab" onclick="showTab(2)">💰 Résultat Identique</div>
+            <div class="tab" onclick="showTab(3)">🎨 Art Leasing</div>
+            <div class="tab" onclick="showTab(4)">💼 Dividendes</div>
+            <div class="tab" onclick="showTab(5)">📈 Graphiques</div>
         </div>
         
         <div class="content">
-            <!-- TAB 0: Comparaison -->
+            <!-- TAB 0: Vue Globale -->
             <div class="tab-content active">
-                <h2 style="text-align: center; margin-bottom: 30px;">Quelle stratégie nécessite le moins de résultat ?</h2>
+                <h2 style="text-align: center; margin-bottom: 30px;">🔍 Analyse Exhaustive : Deux Angles de Comparaison</h2>
+                
+                <div class="info-banner">
+                    <h3>📌 Les deux visions complémentaires</h3>
+                    <p style="line-height: 1.8;">
+                        Cette analyse présente <strong>deux façons de comparer</strong> l'Art Leasing et les Dividendes :<br><br>
+                        <strong>1️⃣ Même objectif net :</strong> Combien de résultat faut-il pour obtenir le même montant net ?<br>
+                        <strong>2️⃣ Même résultat de départ :</strong> Avec le même résultat initial, qui récupère le plus ?
+                    </p>
+                </div>
+
+                <h3 style="text-align: center; margin: 40px 0 20px 0;">1️⃣ COMPARAISON : RÉSULTAT NÉCESSAIRE</h3>
+                <p style="text-align: center; color: #666; margin-bottom: 30px;">
+                    <strong>Question :</strong> Pour obtenir <span id="vue1_objectif" style="color: #4CAF50; font-weight: bold;">37.987 €</span> nets, quel résultat faut-il générer ?
+                </p>
                 
                 <div class="comparison-cards">
                     <div class="card winner">
                         <h3>🎨 Art Leasing</h3>
-                        <div class="big-number" id="resultatArtLeasing">60.000 €</div>
-                        <p style="text-align: center; color: #2e7d32; font-weight: bold;">Résultat nécessaire sur 2 ans</p>
-                        
+                        <div class="big-number" id="vue1_resultatAL">60.000 €</div>
+                        <p style="text-align: center; color: #2e7d32; font-weight: bold;">Résultat nécessaire</p>
                         <div class="stat-row">
-                            <span class="stat-label">Charges déductibles</span>
-                            <span class="stat-value" id="chargesArtLeasing" style="color: #f44336;">- 38.400 €</span>
-                        </div>
-                        <div class="stat-row">
-                            <span class="stat-label">Impôts totaux</span>
-                            <span class="stat-value" id="impotsArtLeasing" style="color: #f44336;">- 12.113 €</span>
-                        </div>
-                        <div class="stat-row">
-                            <span class="stat-label">Net dans la poche</span>
-                            <span class="stat-value" id="netArtLeasing" style="color: #4CAF50;">37.987 €</span>
+                            <span class="stat-label">Pour obtenir nets</span>
+                            <span class="stat-value" id="vue1_netAL" style="color: #4CAF50;">37.987 €</span>
                         </div>
                     </div>
                     
                     <div class="card">
-                        <h3>📋 Dividendes Classiques</h3>
-                        <div class="big-number" id="resultatDividendes">90.300 €</div>
-                        <p style="text-align: center; color: #666;">Résultat nécessaire sur 2 ans</p>
+                        <h3>💰 Dividendes</h3>
+                        <div class="big-number" id="vue1_resultatDiv">90.300 €</div>
+                        <p style="text-align: center; color: #666;">Résultat nécessaire</p>
+                        <div class="stat-row">
+                            <span class="stat-label">Pour obtenir nets</span>
+                            <span class="stat-value" id="vue1_netDiv" style="color: #4CAF50;">37.987 €</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="success-box">
+                    <p style="font-size: 1.2em; text-align: center;">
+                        <strong>💰 Économie de résultat : <span id="vue1_economie" style="color: #4CAF50;">30.300 €</span> (<span id="vue1_pourcent">-33,6%</span>)</strong>
+                    </p>
+                </div>
+
+                <hr style="margin: 50px 0; border: none; border-top: 2px dashed #ccc;">
+
+                <h3 style="text-align: center; margin: 40px 0 20px 0;">2️⃣ COMPARAISON : RÉSULTAT IDENTIQUE</h3>
+                <p style="text-align: center; color: #666; margin-bottom: 30px;">
+                    <strong>Question :</strong> Avec <span id="vue2_resultat" style="color: #667eea; font-weight: bold;">60.000 €</span> de résultat, qui récupère le plus ?
+                </p>
+                
+                <div class="comparison-cards">
+                    <div class="card winner">
+                        <h3>🎨 Art Leasing</h3>
+                        <div class="big-number" id="vue2_netAL">37.987 €</div>
+                        <p style="text-align: center; color: #2e7d32; font-weight: bold;">Net dans la poche</p>
+                        <div class="stat-row">
+                            <span class="stat-label">Résultat de départ</span>
+                            <span class="stat-value" id="vue2_resultatAL">60.000 €</span>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <h3>💰 Dividendes</h3>
+                        <div class="big-number" id="vue2_netDiv">31.500 €</div>
+                        <p style="text-align: center; color: #666;">Net dans la poche</p>
+                        <div class="stat-row">
+                            <span class="stat-label">Résultat de départ</span>
+                            <span class="stat-value" id="vue2_resultatDiv">60.000 €</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="success-box">
+                    <p style="font-size: 1.2em; text-align: center;">
+                        <strong>🎁 Gain net supplémentaire : <span id="vue2_gain" style="color: #4CAF50;">+6.487 €</span> (<span id="vue2_pourcent">+20,6%</span>)</strong>
+                    </p>
+                </div>
+
+                <div class="highlight-box" style="margin-top: 40px;">
+                    <h3>🎯 Synthèse des deux analyses</h3>
+                    <table style="width: 100%; margin-top: 15px; border-collapse: collapse;">
+                        <tr style="background: #f5f5f5;">
+                            <th style="padding: 15px; text-align: left; border: 1px solid #ddd;">Angle d'analyse</th>
+                            <th style="padding: 15px; text-align: center; border: 1px solid #ddd;">Art Leasing</th>
+                            <th style="padding: 15px; text-align: center; border: 1px solid #ddd;">Dividendes</th>
+                            <th style="padding: 15px; text-align: center; border: 1px solid #ddd;">Avantage</th>
+                        </tr>
+                        <tr>
+                            <td style="padding: 15px; border: 1px solid #ddd;"><strong>Résultat pour obtenir <span id="synth_net">37.987 €</span> nets</strong></td>
+                            <td style="padding: 15px; text-align: center; border: 1px solid #ddd; background: #e8f5e9;" id="synth_res1AL"><strong>60.000 €</strong></td>
+                            <td style="padding: 15px; text-align: center; border: 1px solid #ddd;" id="synth_res1Div">90.300 €</td>
+                            <td style="padding: 15px; text-align: center; border: 1px solid #ddd; color: #4CAF50;" id="synth_eco1"><strong>-30.300 €</strong></td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 15px; border: 1px solid #ddd;"><strong>Net obtenu avec <span id="synth_res">60.000 €</span> de résultat</strong></td>
+                            <td style="padding: 15px; text-align: center; border: 1px solid #ddd; background: #e8f5e9;" id="synth_net2AL"><strong>37.987 €</strong></td>
+                            <td style="padding: 15px; text-align: center; border: 1px solid #ddd;" id="synth_net2Div">31.500 €</td>
+                            <td style="padding: 15px; text-align: center; border: 1px solid #ddd; color: #4CAF50;" id="synth_gain2"><strong>+6.487 €</strong></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <!-- TAB 1: Résultat Nécessaire -->
+            <div class="tab-content">
+                <h2 style="text-align: center; margin-bottom: 30px;">🎯 Comparaison 1 : Résultat Nécessaire</h2>
+                <p style="text-align: center; color: #666; font-size: 1.2em; margin-bottom: 40px;">
+                    Pour obtenir <strong><span id="rn_objectif" style="color: #4CAF50;">37.987 €</span> nets</strong> dans la poche du dirigeant
+                </p>
+                
+                <div class="comparison-cards">
+                    <div class="card winner">
+                        <h3>🎨 Art Leasing</h3>
+                        <div class="big-number" id="rn_resultatAL">60.000 €</div>
+                        <p style="text-align: center; color: #2e7d32; font-weight: bold;">Résultat nécessaire</p>
+                        
+                        <div class="stat-row">
+                            <span class="stat-label">Charges déductibles</span>
+                            <span class="stat-value" id="rn_chargesAL" style="color: #f44336;">- 38.400 €</span>
+                        </div>
+                        <div class="stat-row">
+                            <span class="stat-label">Impôts totaux</span>
+                            <span class="stat-value" id="rn_impotsAL" style="color: #f44336;">- 12.113 €</span>
+                        </div>
+                        <div class="stat-row">
+                            <span class="stat-label">Net final</span>
+                            <span class="stat-value" id="rn_netAL" style="color: #4CAF50;">37.987 €</span>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <h3>💰 Dividendes</h3>
+                        <div class="big-number" id="rn_resultatDiv">90.300 €</div>
+                        <p style="text-align: center; color: #666;">Résultat nécessaire</p>
                         
                         <div class="stat-row">
                             <span class="stat-label">Aucune charge</span>
@@ -477,11 +597,11 @@
                         </div>
                         <div class="stat-row">
                             <span class="stat-label">Impôts totaux</span>
-                            <span class="stat-value" id="impotsDividendes" style="color: #f44336;">- 42.856 €</span>
+                            <span class="stat-value" id="rn_impotsDiv" style="color: #f44336;">- 42.856 €</span>
                         </div>
                         <div class="stat-row">
-                            <span class="stat-label">Net dans la poche</span>
-                            <span class="stat-value" id="netDividendes" style="color: #4CAF50;">37.987 €</span>
+                            <span class="stat-label">Net final</span>
+                            <span class="stat-value" id="rn_netDiv" style="color: #4CAF50;">37.987 €</span>
                         </div>
                     </div>
                 </div>
@@ -489,46 +609,116 @@
                 <div class="summary-grid">
                     <div class="summary-card">
                         <h4>ÉCONOMIE DE RÉSULTAT</h4>
-                        <div class="value" id="economieResultat">30.300 €</div>
+                        <div class="value" id="rn_economieResultat">30.300 €</div>
                     </div>
                     <div class="summary-card">
                         <h4>ÉCONOMIE D'IMPÔTS</h4>
-                        <div class="value" id="economieImpots">30.743 €</div>
+                        <div class="value" id="rn_economieImpots">30.743 €</div>
                     </div>
                     <div class="summary-card">
                         <h4>EFFICACITÉ</h4>
-                        <div class="value" id="efficacite">-33,6%</div>
+                        <div class="value" id="rn_efficacite">-33,6%</div>
                     </div>
                 </div>
                 
                 <div class="success-box">
-                    <h3>🎯 Conclusion</h3>
-                    <p style="font-size: 1.2em; line-height: 1.6;">
-                        <strong>Pour mettre <span id="montantNetFinal">37.987 €</span> nets dans la poche du dirigeant :</strong>
+                    <h3>💡 Interprétation</h3>
+                    <p style="font-size: 1.1em; line-height: 1.8;">
+                        Avec l'Art Leasing, il suffit de <strong id="rn_res1">60.000 €</strong> de résultat pour mettre <strong id="rn_obj1">37.987 €</strong> nets dans la poche.<br><br>
+                        
+                        Avec les dividendes classiques, il faudrait générer <strong id="rn_res2">90.300 €</strong> de résultat pour obtenir le même montant net.<br><br>
+                        
+                        <strong style="color: #4CAF50; font-size: 1.2em;">➜ L'Art Leasing permet d'économiser <span id="rn_eco">30.300 €</span> de résultat brut !</strong>
                     </p>
-                    <ul style="margin: 15px 0 15px 30px; line-height: 2;">
-                        <li><strong>Art Leasing :</strong> Nécessite <span id="resultatArtLeasing2" style="color: #4CAF50; font-weight: bold;">60.000 €</span> de résultat</li>
-                        <li><strong>Dividendes :</strong> Nécessite <span id="resultatDividendes2" style="color: #f44336; font-weight: bold;">90.300 €</span> de résultat</li>
-                    </ul>
-                    <p style="font-size: 1.3em; margin-top: 20px; padding: 15px; background: white; border-radius: 8px; text-align: center;">
-                        <strong>💰 Économie de résultat : <span id="economieResultat2" style="color: #4CAF50;">30.300 €</span> (<span id="efficacite2">-33,6%</span>)</strong>
-                    </p>
+                </div>
+            </div>
+
+            <!-- TAB 2: Résultat Identique -->
+            <div class="tab-content">
+                <h2 style="text-align: center; margin-bottom: 30px;">💰 Comparaison 2 : Résultat Identique</h2>
+                <p style="text-align: center; color: #666; font-size: 1.2em; margin-bottom: 40px;">
+                    Avec <strong><span id="ri_resultat" style="color: #667eea;">60.000 €</span></strong> de résultat (2 ans), qui récupère le plus ?
+                </p>
+                
+                <div class="comparison-cards">
+                    <div class="card winner">
+                        <h3>🎨 Art Leasing</h3>
+                        <div class="big-number" id="ri_netAL">37.987 €</div>
+                        <p style="text-align: center; color: #2e7d32; font-weight: bold;">Net dans la poche</p>
+                        
+                        <div class="stat-row">
+                            <span class="stat-label">Résultat initial</span>
+                            <span class="stat-value" id="ri_resAL">60.000 €</span>
+                        </div>
+                        <div class="stat-row">
+                            <span class="stat-label">Impôt IS</span>
+                            <span class="stat-value" id="ri_isAL" style="color: #f44336;">- 5.400 €</span>
+                        </div>
+                        <div class="stat-row">
+                            <span class="stat-label">Taxe dividendes + PV</span>
+                            <span class="stat-value" id="ri_taxesAL" style="color: #f44336;">- 6.713 €</span>
+                        </div>
+                        <div class="stat-row">
+                            <span class="stat-label">Total impôts</span>
+                            <span class="stat-value" id="ri_totImpAL" style="color: #f44336;">12.113 €</span>
+                        </div>
+                        
+                        <div class="gain-badge" id="ri_badge">✨ GAIN : +6.487 € (+20,6%)</div>
+                    </div>
+                    
+                    <div class="card">
+                        <h3>💰 Dividendes</h3>
+                        <div class="big-number" id="ri_netDiv">31.500 €</div>
+                        <p style="text-align: center; color: #666;">Net dans la poche</p>
+                        
+                        <div class="stat-row">
+                            <span class="stat-label">Résultat initial</span>
+                            <span class="stat-value" id="ri_resDiv">60.000 €</span>
+                        </div>
+                        <div class="stat-row">
+                            <span class="stat-label">Impôt IS (25%)</span>
+                            <span class="stat-value" id="ri_isDiv" style="color: #f44336;">- 15.000 €</span>
+                        </div>
+                        <div class="stat-row">
+                            <span class="stat-label">Taxe dividendes (30%)</span>
+                            <span class="stat-value" id="ri_taxesDiv" style="color: #f44336;">- 13.500 €</span>
+                        </div>
+                        <div class="stat-row">
+                            <span class="stat-label">Total impôts</span>
+                            <span class="stat-value" id="ri_totImpDiv" style="color: #f44336;">28.500 €</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="summary-grid">
+                    <div class="summary-card">
+                        <h4>GAIN NET</h4>
+                        <div class="value" id="ri_gainNet">+6.487 €</div>
+                    </div>
+                    <div class="summary-card">
+                        <h4>ÉCONOMIE D'IMPÔTS</h4>
+                        <div class="value" id="ri_economieImpots">16.387 €</div>
+                    </div>
+                    <div class="summary-card">
+                        <h4>GAIN EN %</h4>
+                        <div class="value" id="ri_gainPourcent">+20,6%</div>
+                    </div>
                 </div>
                 
                 <div class="highlight-box">
-                    <h3>💡 Pourquoi cette différence ?</h3>
+                    <h3>💡 Pourquoi ça marche ?</h3>
                     <ul style="margin-left: 20px; line-height: 1.8;">
-                        <li><strong>Charges déductibles :</strong> <span id="chargesDeductiblesDetail">38.400 €</span> réduisent drastiquement la base imposable</li>
-                        <li><strong>Double économie fiscale :</strong> Moins d'IS ET moins de taxes sur dividendes</li>
-                        <li><strong>Taxation avantageuse :</strong> 6,5% sur la plus-value vs 30% sur dividendes</li>
-                        <li><strong>Acquisition d'un actif :</strong> L'œuvre d'art conserve sa valeur</li>
+                        <li><strong id="ri_charges">38.400 €</strong> de charges déductibles réduisent la base imposable</li>
+                        <li><strong>IS économisé : <span id="ri_ecoIS">9.600 €</span></strong> grâce aux charges</li>
+                        <li><strong>Taxes dividendes économisées : <span id="ri_ecoTaxes">8.640 €</span></strong> (moins de dividendes à distribuer)</li>
+                        <li><strong>Taxation favorable :</strong> 6,5% sur la plus-value vs 30% sur dividendes</li>
                     </ul>
                 </div>
             </div>
             
-            <!-- TAB 1: Art Leasing -->
+            <!-- TAB 3: Art Leasing -->
             <div class="tab-content">
-                <h2 style="text-align: center; margin-bottom: 30px;">🎨 Scénario Art Leasing</h2>
+                <h2 style="text-align: center; margin-bottom: 30px;">🎨 Scénario Art Leasing Détaillé</h2>
                 
                 <div class="flow-diagram">
                     <div class="flow-step">
@@ -604,22 +794,22 @@
                 </div>
             </div>
             
-            <!-- TAB 2: Dividendes Équivalents -->
+            <!-- TAB 4: Dividendes -->
             <div class="tab-content">
-                <h2 style="text-align: center; margin-bottom: 30px;">💰 Dividendes Nécessaires pour le Même Résultat</h2>
+                <h2 style="text-align: center; margin-bottom: 30px;">💼 Scénario Dividendes Équivalents</h2>
                 
                 <div class="warning-box">
                     <h3>🎯 Objectif</h3>
-                    <p style="font-size: 1.2em;">Obtenir <strong><span id="div_objectif">37.987 €</span> nets</strong> dans la poche du dirigeant (= montant obtenu avec l'Art Leasing)</p>
+                    <p style="font-size: 1.2em;">Obtenir <strong><span id="div_objectif">37.987 €</span> nets</strong> (= montant avec Art Leasing)</p>
                 </div>
                 
                 <div class="flow-diagram">
                     <div class="flow-step" style="background: #ffebee; border: 2px solid #f44336;">
                         <div class="flow-icon" style="background: #f44336;">?</div>
                         <div class="flow-content">
-                            <h4>Résultat nécessaire (à déterminer)</h4>
+                            <h4>Résultat nécessaire</h4>
                             <div class="flow-amount" style="color: #f44336; font-size: 2.5em;" id="div_resultatNecessaire">90.300 €</div>
-                            <p style="color: #666; margin-top: 10px;">Résultat brut sur 2 ans pour obtenir le même montant net</p>
+                            <p style="color: #666; margin-top: 10px;">Résultat brut sur 2 ans</p>
                         </div>
                     </div>
                     
@@ -639,16 +829,6 @@
                     <div class="flow-step">
                         <div class="flow-icon">2</div>
                         <div class="flow-content">
-                            <h4>Distribution de dividendes bruts</h4>
-                            <div class="flow-amount" id="div_dividendesBruts">67.725 €</div>
-                        </div>
-                    </div>
-                    
-                    <div class="arrow">↓</div>
-                    
-                    <div class="flow-step">
-                        <div class="flow-icon">3</div>
-                        <div class="flow-content">
                             <h4>Taxe unique sur dividendes (30%)</h4>
                             <div class="flow-amount negative" id="div_taxeDividendes">- 20.318 €</div>
                         </div>
@@ -659,27 +839,24 @@
                     <div class="flow-step" style="background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); border: 3px solid #667eea;">
                         <div class="flow-icon" style="background: #667eea;">✓</div>
                         <div class="flow-content">
-                            <h4>NET DANS LA POCHE DU DIRIGEANT</h4>
+                            <h4>NET DANS LA POCHE</h4>
                             <div class="flow-amount" style="font-size: 2em;" id="div_netFinal">37.987 €</div>
-                            <p style="color: #666; margin-top: 10px;" id="div_tauxPonction">Taux de ponction global : 47,5%</p>
+                            <p style="color: #666; margin-top: 10px;" id="div_tauxPonction">Taux de ponction : 47,5%</p>
                         </div>
                     </div>
                 </div>
                 
                 <div class="warning-box">
-                    <h3>⚠️ Résultat de la comparaison</h3>
+                    <h3>⚠️ Conclusion</h3>
                     <p style="font-size: 1.2em; line-height: 1.8;">
-                        Pour obtenir le même montant net (<strong><span id="comp_montantNet">37.987 €</span></strong>) :<br>
-                        <br>
-                        • <strong style="color: #4CAF50;">Art Leasing :</strong> <span id="comp_resultatArtLeasing">60.000 €</span> de résultat suffisent<br>
-                        • <strong style="color: #f44336;">Dividendes :</strong> <span id="comp_resultatDividendes">90.300 €</span> de résultat nécessaires<br>
-                        <br>
-                        <strong style="color: #4CAF50; font-size: 1.3em;">➜ Économie : <span id="comp_economie">30.300 €</span> de résultat (<span id="comp_pourcentage">-33,6%</span>)</strong>
+                        • <strong style="color: #4CAF50;">Art Leasing :</strong> <span id="div_comp1">60.000 €</span> de résultat suffisent<br>
+                        • <strong style="color: #f44336;">Dividendes :</strong> <span id="div_comp2">90.300 €</span> de résultat nécessaires<br><br>
+                        <strong style="color: #4CAF50; font-size: 1.3em;">➜ Économie : <span id="div_eco">30.300 €</span> (<span id="div_pourcent">-33,6%</span>)</strong>
                     </p>
                 </div>
             </div>
             
-            <!-- TAB 3: Graphiques -->
+            <!-- TAB 5: Graphiques -->
             <div class="tab-content">
                 <h2 style="text-align: center; margin-bottom: 30px;">📈 Analyses Graphiques</h2>
                 
@@ -688,7 +865,7 @@
                 </div>
                 
                 <div class="chart-container">
-                    <canvas id="taxChart"></canvas>
+                    <canvas id="netChart"></canvas>
                 </div>
                 
                 <div class="chart-container">
@@ -731,10 +908,7 @@
             const art_totalImpots = art_is + art_taxeDividendes + art_taxePlusValue;
             const art_tauxPonction = ((art_totalImpots / resultatTotal) * 100).toFixed(1);
             
-            // DIVIDENDES : Calculer le résultat nécessaire pour obtenir art_netTotal
-            // Formule inverse : 
-            // net = resultat * (1 - tauxIS) * (1 - tauxDividendes)
-            // donc : resultat = net / ((1 - tauxIS) * (1 - tauxDividendes))
+            // COMPARAISON 1: Résultat nécessaire pour obtenir art_netTotal en dividendes
             const div_resultatNecessaire = Math.round(art_netTotal / ((1 - tauxIS) * (1 - tauxDividendes)));
             const div_is = Math.round(div_resultatNecessaire * tauxIS);
             const div_resultatNet = div_resultatNecessaire - div_is;
@@ -743,17 +917,28 @@
             const div_totalImpots = div_is + div_taxeDividendes;
             const div_tauxPonction = ((div_totalImpots / div_resultatNecessaire) * 100).toFixed(1);
             
-            // COMPARAISON
             const economieResultat = div_resultatNecessaire - resultatTotal;
             const pourcentageEconomie = ((economieResultat / div_resultatNecessaire) * 100).toFixed(1);
             const economieImpots = div_totalImpots - art_totalImpots;
+            
+            // COMPARAISON 2: Dividendes classiques avec resultatTotal
+            const div2_is = Math.round(resultatTotal * tauxIS);
+            const div2_resultatNet = resultatTotal - div2_is;
+            const div2_taxeDividendes = Math.round(div2_resultatNet * tauxDividendes);
+            const div2_netPoche = div2_resultatNet - div2_taxeDividendes;
+            const div2_totalImpots = div2_is + div2_taxeDividendes;
+            
+            const gainNet = art_netTotal - div2_netPoche;
+            const gainPourcent = ((gainNet / div2_netPoche) * 100).toFixed(1);
+            const economieImpots2 = div2_totalImpots - art_totalImpots;
             
             calculations = {
                 resultatTotal, loyerMensuel, loyersTotal, apportInitial, chargesLeasingTotal,
                 art_resultatImposable, art_is, art_resultatNet, art_taxeDividendes, art_dividendesNets,
                 art_rachat, art_revente, art_taxePlusValue, art_produitRevente, art_netTotal, art_totalImpots, art_tauxPonction,
                 div_resultatNecessaire, div_is, div_resultatNet, div_taxeDividendes, div_netPoche, div_totalImpots, div_tauxPonction,
-                economieResultat, pourcentageEconomie, economieImpots,
+                div2_is, div2_resultatNet, div2_taxeDividendes, div2_netPoche, div2_totalImpots,
+                economieResultat, pourcentageEconomie, economieImpots, gainNet, gainPourcent, economieImpots2,
                 valeurOeuvre, dureeMois, tauxIS, tauxDividendes
             };
             
@@ -779,31 +964,73 @@
                 chargesInfo.textContent = `Charges de leasing : ${formatEuro(c.loyersTotal)} sur ${c.dureeMois} mois`;
             }
             
-            // TAB 0: Comparaison
-            document.getElementById('resultatArtLeasing').textContent = formatEuro(c.resultatTotal);
-            document.getElementById('chargesArtLeasing').textContent = formatEuro(-c.chargesLeasingTotal);
-            document.getElementById('impotsArtLeasing').textContent = formatEuro(-c.art_totalImpots);
-            document.getElementById('netArtLeasing').textContent = formatEuro(c.art_netTotal);
+            // TAB 0: Vue globale
+            // Vue 1
+            document.getElementById('vue1_objectif').textContent = formatEuro(c.art_netTotal);
+            document.getElementById('vue1_resultatAL').textContent = formatEuro(c.resultatTotal);
+            document.getElementById('vue1_netAL').textContent = formatEuro(c.art_netTotal);
+            document.getElementById('vue1_resultatDiv').textContent = formatEuro(c.div_resultatNecessaire);
+            document.getElementById('vue1_netDiv').textContent = formatEuro(c.div_netPoche);
+            document.getElementById('vue1_economie').textContent = formatEuro(c.economieResultat);
+            document.getElementById('vue1_pourcent').textContent = `-${c.pourcentageEconomie}%`;
             
-            document.getElementById('resultatDividendes').textContent = formatEuro(c.div_resultatNecessaire);
-            document.getElementById('impotsDividendes').textContent = formatEuro(-c.div_totalImpots);
-            document.getElementById('netDividendes').textContent = formatEuro(c.div_netPoche);
+            // Vue 2
+            document.getElementById('vue2_resultat').textContent = formatEuro(c.resultatTotal);
+            document.getElementById('vue2_netAL').textContent = formatEuro(c.art_netTotal);
+            document.getElementById('vue2_resultatAL').textContent = formatEuro(c.resultatTotal);
+            document.getElementById('vue2_netDiv').textContent = formatEuro(c.div2_netPoche);
+            document.getElementById('vue2_resultatDiv').textContent = formatEuro(c.resultatTotal);
+            document.getElementById('vue2_gain').textContent = formatEuro(c.gainNet);
+            document.getElementById('vue2_pourcent').textContent = `+${c.gainPourcent}%`;
             
-            document.getElementById('economieResultat').textContent = formatEuro(c.economieResultat);
-            document.getElementById('economieImpots').textContent = formatEuro(c.economieImpots);
-            document.getElementById('efficacite').textContent = `-${c.pourcentageEconomie}%`;
+            // Synthèse
+            document.getElementById('synth_net').textContent = formatEuro(c.art_netTotal);
+            document.getElementById('synth_res1AL').textContent = formatEuro(c.resultatTotal);
+            document.getElementById('synth_res1Div').textContent = formatEuro(c.div_resultatNecessaire);
+            document.getElementById('synth_eco1').textContent = formatEuro(-c.economieResultat);
+            document.getElementById('synth_res').textContent = formatEuro(c.resultatTotal);
+            document.getElementById('synth_net2AL').textContent = formatEuro(c.art_netTotal);
+            document.getElementById('synth_net2Div').textContent = formatEuro(c.div2_netPoche);
+            document.getElementById('synth_gain2').textContent = formatEuro(c.gainNet);
             
-            // Success box
-            const elements = ['montantNetFinal', 'resultatArtLeasing2', 'resultatDividendes2', 'economieResultat2', 'efficacite2'];
-            const values = [c.art_netTotal, c.resultatTotal, c.div_resultatNecessaire, c.economieResultat, `-${c.pourcentageEconomie}%`];
-            elements.forEach((id, i) => {
-                const el = document.getElementById(id);
-                if (el) el.textContent = i < 4 ? formatEuro(values[i]) : values[i];
-            });
+            // TAB 1: Résultat nécessaire
+            document.getElementById('rn_objectif').textContent = formatEuro(c.art_netTotal);
+            document.getElementById('rn_resultatAL').textContent = formatEuro(c.resultatTotal);
+            document.getElementById('rn_chargesAL').textContent = formatEuro(-c.chargesLeasingTotal);
+            document.getElementById('rn_impotsAL').textContent = formatEuro(-c.art_totalImpots);
+            document.getElementById('rn_netAL').textContent = formatEuro(c.art_netTotal);
+            document.getElementById('rn_resultatDiv').textContent = formatEuro(c.div_resultatNecessaire);
+            document.getElementById('rn_impotsDiv').textContent = formatEuro(-c.div_totalImpots);
+            document.getElementById('rn_netDiv').textContent = formatEuro(c.div_netPoche);
+            document.getElementById('rn_economieResultat').textContent = formatEuro(c.economieResultat);
+            document.getElementById('rn_economieImpots').textContent = formatEuro(c.economieImpots);
+            document.getElementById('rn_efficacite').textContent = `-${c.pourcentageEconomie}%`;
+            document.getElementById('rn_res1').textContent = formatEuro(c.resultatTotal);
+            document.getElementById('rn_obj1').textContent = formatEuro(c.art_netTotal);
+            document.getElementById('rn_res2').textContent = formatEuro(c.div_resultatNecessaire);
+            document.getElementById('rn_eco').textContent = formatEuro(c.economieResultat);
             
-            document.getElementById('chargesDeductiblesDetail').textContent = formatEuro(c.chargesLeasingTotal);
+            // TAB 2: Résultat identique
+            document.getElementById('ri_resultat').textContent = formatEuro(c.resultatTotal);
+            document.getElementById('ri_netAL').textContent = formatEuro(c.art_netTotal);
+            document.getElementById('ri_resAL').textContent = formatEuro(c.resultatTotal);
+            document.getElementById('ri_isAL').textContent = formatEuro(-c.art_is);
+            document.getElementById('ri_taxesAL').textContent = formatEuro(-(c.art_taxeDividendes + c.art_taxePlusValue));
+            document.getElementById('ri_totImpAL').textContent = formatEuro(c.art_totalImpots);
+            document.getElementById('ri_badge').textContent = `✨ GAIN : ${formatEuro(c.gainNet)} (+${c.gainPourcent}%)`;
+            document.getElementById('ri_netDiv').textContent = formatEuro(c.div2_netPoche);
+            document.getElementById('ri_resDiv').textContent = formatEuro(c.resultatTotal);
+            document.getElementById('ri_isDiv').textContent = formatEuro(-c.div2_is);
+            document.getElementById('ri_taxesDiv').textContent = formatEuro(-c.div2_taxeDividendes);
+            document.getElementById('ri_totImpDiv').textContent = formatEuro(c.div2_totalImpots);
+            document.getElementById('ri_gainNet').textContent = formatEuro(c.gainNet);
+            document.getElementById('ri_economieImpots').textContent = formatEuro(c.economieImpots2);
+            document.getElementById('ri_gainPourcent').textContent = `+${c.gainPourcent}%`;
+            document.getElementById('ri_charges').textContent = formatEuro(c.chargesLeasingTotal);
+            document.getElementById('ri_ecoIS').textContent = formatEuro(c.div2_is - c.art_is);
+            document.getElementById('ri_ecoTaxes').textContent = formatEuro(c.div2_taxeDividendes - c.art_taxeDividendes);
             
-            // TAB 1: Art Leasing
+            // TAB 3: Art Leasing
             document.getElementById('al_resultat').textContent = formatEuro(c.resultatTotal);
             document.getElementById('al_charges').textContent = formatEuro(-c.chargesLeasingTotal);
             
@@ -834,23 +1061,18 @@
             document.getElementById('al_netDetail').textContent = `${formatEuro(c.art_dividendesNets)} (dividendes) + ${formatEuro(c.art_produitRevente)} (revente)`;
             document.getElementById('al_tauxPonction').textContent = `Taux de ponction global : ${c.art_tauxPonction}%`;
             
-            // TAB 2: Dividendes
+            // TAB 4: Dividendes
             document.getElementById('div_objectif').textContent = formatEuro(c.art_netTotal);
             document.getElementById('div_resultatNecessaire').textContent = formatEuro(c.div_resultatNecessaire);
             document.getElementById('div_is').textContent = formatEuro(-c.div_is);
             document.getElementById('div_resultatNet').textContent = `Résultat net : ${formatEuro(c.div_resultatNet)}`;
-            document.getElementById('div_dividendesBruts').textContent = formatEuro(c.div_resultatNet);
             document.getElementById('div_taxeDividendes').textContent = formatEuro(-c.div_taxeDividendes);
             document.getElementById('div_netFinal').textContent = formatEuro(c.div_netPoche);
-            document.getElementById('div_tauxPonction').textContent = `Taux de ponction global : ${c.div_tauxPonction}%`;
-            
-            // Comparaison finale
-            ['comp_montantNet', 'comp_resultatArtLeasing', 'comp_resultatDividendes', 'comp_economie'].forEach((id, i) => {
-                const vals = [c.art_netTotal, c.resultatTotal, c.div_resultatNecessaire, c.economieResultat];
-                const el = document.getElementById(id);
-                if (el) el.textContent = formatEuro(vals[i]);
-            });
-            document.getElementById('comp_pourcentage').textContent = `-${c.pourcentageEconomie}%`;
+            document.getElementById('div_tauxPonction').textContent = `Taux de ponction : ${c.div_tauxPonction}%`;
+            document.getElementById('div_comp1').textContent = formatEuro(c.resultatTotal);
+            document.getElementById('div_comp2').textContent = formatEuro(c.div_resultatNecessaire);
+            document.getElementById('div_eco').textContent = formatEuro(c.economieResultat);
+            document.getElementById('div_pourcent').textContent = `-${c.pourcentageEconomie}%`;
             
             // Mise à jour des graphiques si onglet actif
             const activeTab = document.querySelector('.tab.active');
@@ -880,7 +1102,7 @@
             tabs[index].classList.add('active');
             contents[index].classList.add('active');
             
-            if (index === 3) {
+            if (index === 5) {
                 initCharts();
             }
         }
@@ -888,7 +1110,7 @@
         function initCharts() {
             const c = calculations;
             
-            // Graphique 1: Comparaison résultat nécessaire
+            // Graphique 1: Résultat nécessaire
             const ctx1 = document.getElementById('resultatChart');
             if (ctx1.chart) ctx1.chart.destroy();
             
@@ -910,11 +1132,8 @@
                     plugins: {
                         title: {
                             display: true,
-                            text: `Résultat nécessaire pour obtenir ${formatEuro(c.art_netTotal)} nets`,
-                            font: { size: 20 }
-                        },
-                        legend: {
-                            display: false
+                            text: `Comparaison 1 : Résultat nécessaire pour ${formatEuro(c.art_netTotal)} nets`,
+                            font: { size: 18 }
                         }
                     },
                     scales: {
@@ -930,17 +1149,19 @@
                 }
             });
             
-            // Graphique 2: Répartition impôts
-            const ctx2 = document.getElementById('taxChart');
+            // Graphique 2: Net obtenu
+            const ctx2 = document.getElementById('netChart');
             if (ctx2.chart) ctx2.chart.destroy();
             
             ctx2.chart = new Chart(ctx2, {
-                type: 'doughnut',
+                type: 'bar',
                 data: {
-                    labels: ['Art Leasing - Net', 'Art Leasing - Impôts', 'Dividendes - Net', 'Dividendes - Impôts + surcoût'],
+                    labels: ['Art Leasing', 'Dividendes'],
                     datasets: [{
-                        data: [c.art_netTotal, c.art_totalImpots, c.art_netTotal, c.div_totalImpots],
-                        backgroundColor: ['#4CAF50', '#ff9800', '#667eea', '#f44336'],
+                        label: 'Net dans la poche (€)',
+                        data: [c.art_netTotal, c.div2_netPoche],
+                        backgroundColor: ['#4CAF50', '#667eea'],
+                        borderColor: ['#45a049', '#5568d3'],
                         borderWidth: 2
                     }]
                 },
@@ -950,35 +1171,35 @@
                     plugins: {
                         title: {
                             display: true,
-                            text: 'Répartition : Net vs Impôts & Surcoût',
-                            font: { size: 20 }
-                        },
-                        legend: {
-                            position: 'bottom'
+                            text: `Comparaison 2 : Net obtenu avec ${formatEuro(c.resultatTotal)} de résultat`,
+                            font: { size: 18 }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                callback: function(value) {
+                                    return value.toLocaleString() + ' €';
+                                }
+                            }
                         }
                     }
                 }
             });
             
-            // Graphique 3: Efficacité
+            // Graphique 3: Vision complète
             const ctx3 = document.getElementById('efficaciteChart');
             if (ctx3.chart) ctx3.chart.destroy();
             
             ctx3.chart = new Chart(ctx3, {
                 type: 'bar',
                 data: {
-                    labels: ['Résultat nécessaire', 'Impôts payés', 'Net perçu'],
+                    labels: ['Résultat AL', 'Net AL', 'Résultat Div (équiv.)', 'Net Div (même résultat)'],
                     datasets: [{
-                        label: 'Art Leasing',
-                        data: [c.resultatTotal, c.art_totalImpots, c.art_netTotal],
-                        backgroundColor: 'rgba(76, 175, 80, 0.7)',
-                        borderColor: '#4CAF50',
-                        borderWidth: 2
-                    }, {
-                        label: 'Dividendes',
-                        data: [c.div_resultatNecessaire, c.div_totalImpots, c.div_netPoche],
-                        backgroundColor: 'rgba(244, 67, 54, 0.7)',
-                        borderColor: '#f44336',
+                        label: 'Montants (€)',
+                        data: [c.resultatTotal, c.art_netTotal, c.div_resultatNecessaire, c.div2_netPoche],
+                        backgroundColor: ['#4CAF50', '#84fab0', '#f44336', '#667eea'],
                         borderWidth: 2
                     }]
                 },
@@ -988,8 +1209,8 @@
                     plugins: {
                         title: {
                             display: true,
-                            text: 'Comparaison Complète',
-                            font: { size: 20 }
+                            text: 'Vision Complète des Deux Comparaisons',
+                            font: { size: 18 }
                         }
                     },
                     scales: {
