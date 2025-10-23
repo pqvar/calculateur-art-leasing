@@ -427,7 +427,7 @@
                 color: #666 !important;
             }
             
-            /* Forcer l'affichage de tous les onglets SEULEMENT EN IMPRESSION */
+            /* Forcer l'affichage de tous les onglets UNIQUEMENT pour l'impression */
             .tab-content {
                 display: block !important;
                 page-break-before: always;
@@ -479,7 +479,7 @@
             }
         }
         
-        /* Styles NORMAUX - en dehors de @media print */
+        /* Styles normaux pour l'écran - s'assurer que les onglets fonctionnent */
         @media screen {
             .tab-content {
                 display: none;
@@ -1492,10 +1492,13 @@
         function downloadPDF() {
             // Préparer l'impression
             const originalTitle = document.title;
-            document.title = 'Rapport Art Leasing - ' + formatEuro(calculations.valeur_extraite || 0);
+            document.title = 'Rapport Art Leasing - ' + formatEuro(calculations.valeur_extraite);
             
-            // Ajouter une classe pour le mode impression
-            document.body.classList.add('print-mode');
+            // Afficher tous les onglets pour l'impression
+            const contents = document.querySelectorAll('.tab-content');
+            contents.forEach(content => {
+                content.style.display = 'block';
+            });
             
             // Lancer l'impression
             window.print();
@@ -1503,7 +1506,7 @@
             // Restaurer l'affichage après impression
             setTimeout(() => {
                 document.title = originalTitle;
-                document.body.classList.remove('print-mode');
+                showTab(0); // Retourner à l'onglet actif
             }, 100);
         }
         
