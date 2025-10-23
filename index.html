@@ -390,6 +390,94 @@
                 padding: 15px 5px;
             }
         }
+
+        /* Styles d'impression pour PDF */
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            
+            .container {
+                box-shadow: none;
+                border-radius: 0;
+            }
+            
+            /* Masquer les éléments interactifs */
+            .controls,
+            .tabs,
+            button,
+            .tab,
+            input {
+                display: none !important;
+            }
+            
+            header {
+                background: white !important;
+                color: #333 !important;
+                border-bottom: 3px solid #667eea;
+                page-break-after: avoid;
+            }
+            
+            h1 {
+                color: #667eea !important;
+            }
+            
+            .subtitle {
+                color: #666 !important;
+            }
+            
+            /* Forcer l'affichage de tous les onglets */
+            .tab-content {
+                display: block !important;
+                page-break-before: always;
+            }
+            
+            .tab-content:first-child {
+                page-break-before: avoid;
+            }
+            
+            /* Optimiser les couleurs pour l'impression */
+            .card {
+                border: 2px solid #ddd;
+                box-shadow: none;
+                page-break-inside: avoid;
+            }
+            
+            .card.winner {
+                border: 3px solid #4CAF50;
+            }
+            
+            .summary-card {
+                border: 2px solid #667eea;
+            }
+            
+            /* Éviter les coupures de page */
+            .comparison-cards,
+            .summary-grid,
+            .highlight-box,
+            .success-box,
+            .info-banner,
+            table {
+                page-break-inside: avoid;
+            }
+            
+            /* Masquer les graphiques (trop lourds pour PDF) */
+            .chart-container {
+                display: none;
+            }
+            
+            /* Optimiser les tableaux */
+            table {
+                border-collapse: collapse;
+                width: 100%;
+            }
+            
+            /* Ajouter des marges de page */
+            @page {
+                margin: 2cm;
+            }
+        }
     </style>
 </head>
 <body>
@@ -557,6 +645,163 @@
                         </tr>
                     </table>
                 </div>
+
+                <hr style="margin: 50px 0; border: none; border-top: 2px dashed #ccc;">
+
+                <h3 style="text-align: center; margin: 40px 0 20px 0;">💎 COÛT RÉEL D'EXTRACTION DE VALEUR</h3>
+                <p style="text-align: center; color: #666; font-size: 1.2em; margin-bottom: 30px;">
+                    <strong>Question centrale :</strong> Pour extraire environ <span style="color: #4CAF50; font-weight: bold;" id="valeur_cible">26.647 €</span> de valeur nette,<br>
+                    quel est le coût en % de la somme extraite ?
+                </p>
+
+                <div class="comparison-cards">
+                    <div class="card winner">
+                        <h3>🎨 Art Leasing</h3>
+                        <div style="text-align: center; margin: 20px 0;">
+                            <div style="font-size: 1em; color: #666;">Valeur nette extraite</div>
+                            <div class="big-number" id="extract2_valeurAL" style="font-size: 2.5em; color: #4CAF50;">26.647 €</div>
+                        </div>
+                        
+                        <hr style="margin: 15px 0;">
+                        <p style="text-align: center; font-weight: bold; margin: 10px 0; color: #f44336;">COÛTS de l'extraction :</p>
+                        
+                        <div class="stat-row">
+                            <span class="stat-label">Surcoût de financement</span>
+                            <span class="stat-value" id="extract2_surcout" style="color: #f44336;">8.400 €</span>
+                        </div>
+                        <div style="padding: 5px 15px; font-size: 0.85em; color: #666; background: #f5f5f5; border-radius: 5px; margin: 5px 0;">
+                            <span id="extract2_surcoutDetail">(38.400 € loyers + 0 € apport) - 30.000 € valeur = 8.400 €</span>
+                        </div>
+                        
+                        <div class="stat-row">
+                            <span class="stat-label">Rachat œuvre (5%)</span>
+                            <span class="stat-value" id="extract2_rachat" style="color: #f44336;">1.500 €</span>
+                        </div>
+                        
+                        <div class="stat-row">
+                            <span class="stat-label">Taxe plus-value (6,5%)</span>
+                            <span class="stat-value" id="extract2_taxePV" style="color: #f44336;">1.853 €</span>
+                        </div>
+                        
+                        <div class="stat-row" style="background: #ffebee; border: 2px solid #f44336; margin-top: 15px;">
+                            <span class="stat-label"><strong>COÛT TOTAL</strong></span>
+                            <span class="stat-value" id="extract2_coutTotalAL" style="color: #f44336; font-size: 1.4em;"><strong>11.753 €</strong></span>
+                        </div>
+                        
+                        <div class="stat-row" style="background: #e8f5e9; border: 2px solid #4CAF50; margin-top: 10px;">
+                            <span class="stat-label"><strong>RATIO COÛT / EXTRAIT</strong></span>
+                            <span class="stat-value" id="extract2_ratioAL" style="color: #4CAF50; font-size: 1.4em;"><strong>44,1%</strong></span>
+                        </div>
+                        <p style="text-align: center; margin-top: 15px; color: #4CAF50; font-weight: bold; font-size: 1.1em;">
+                            Le coût représente 44,1% de la valeur extraite
+                        </p>
+                    </div>
+                    
+                    <div class="card">
+                        <h3>💰 Dividendes</h3>
+                        <div style="text-align: center; margin: 20px 0;">
+                            <div style="font-size: 1em; color: #666;">Valeur nette extraite (identique)</div>
+                            <div class="big-number" id="extract2_valeurDiv" style="font-size: 2.5em; color: #4CAF50;">26.647 €</div>
+                        </div>
+                        
+                        <div class="stat-row" style="background: #fff3cd; border: 2px solid #ff9800;">
+                            <span class="stat-label">Résultat nécessaire</span>
+                            <span class="stat-value" id="extract2_resultatDiv" style="color: #ff9800; font-weight: bold;">50.281 €</span>
+                        </div>
+                        
+                        <hr style="margin: 15px 0;">
+                        <p style="text-align: center; font-weight: bold; margin: 10px 0; color: #f44336;">COÛTS de l'extraction :</p>
+                        
+                        <div class="stat-row">
+                            <span class="stat-label">Impôt IS (25%)</span>
+                            <span class="stat-value" id="extract2_isDiv" style="color: #f44336;">12.570 €</span>
+                        </div>
+                        
+                        <div class="stat-row">
+                            <span class="stat-label">Flat tax (30%)</span>
+                            <span class="stat-value" id="extract2_flatTax" style="color: #f44336;">11.064 €</span>
+                        </div>
+                        
+                        <div style="padding: 60px 0;"></div>
+                        
+                        <div class="stat-row" style="background: #ffebee; border: 2px solid #f44336; margin-top: 15px;">
+                            <span class="stat-label"><strong>COÛT TOTAL</strong></span>
+                            <span class="stat-value" id="extract2_coutTotalDiv" style="color: #f44336; font-size: 1.4em;"><strong>23.634 €</strong></span>
+                        </div>
+                        
+                        <div class="stat-row" style="background: #ffebee; border: 2px solid #f44336; margin-top: 10px;">
+                            <span class="stat-label"><strong>RATIO COÛT / EXTRAIT</strong></span>
+                            <span class="stat-value" id="extract2_ratioDiv" style="color: #f44336; font-size: 1.4em;"><strong>88,7%</strong></span>
+                        </div>
+                        <p style="text-align: center; margin-top: 15px; color: #f44336; font-weight: bold; font-size: 1.1em;">
+                            Le coût représente 88,7% de la valeur extraite
+                        </p>
+                    </div>
+                </div>
+
+                <div class="success-box">
+                    <h3>🎯 Démonstration : L'Art Leasing est 2X plus efficace</h3>
+                    <p style="font-size: 1.2em; line-height: 2;">
+                        <strong>Pour extraire <span id="extract2_objectif">26.647 €</span> de valeur nette :</strong>
+                    </p>
+                    
+                    <table style="width: 100%; margin: 20px 0; border-collapse: collapse; font-size: 1.1em;">
+                        <tr style="background: #f5f5f5;">
+                            <th style="padding: 15px; border: 2px solid #ddd;"></th>
+                            <th style="padding: 15px; text-align: center; border: 2px solid #ddd;">🎨 Art Leasing</th>
+                            <th style="padding: 15px; text-align: center; border: 2px solid #ddd;">💰 Dividendes</th>
+                        </tr>
+                        <tr>
+                            <td style="padding: 15px; border: 2px solid #ddd;"><strong>Résultat nécessaire</strong></td>
+                            <td style="padding: 15px; text-align: center; border: 2px solid #ddd; background: #e8f5e9;" id="tab_res_al">60.000 €</td>
+                            <td style="padding: 15px; text-align: center; border: 2px solid #ddd;" id="tab_res_div">50.281 €</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 15px; border: 2px solid #ddd;"><strong>Coût d'extraction</strong></td>
+                            <td style="padding: 15px; text-align: center; border: 2px solid #ddd; background: #e8f5e9;" id="tab_cout_al">11.753 €</td>
+                            <td style="padding: 15px; text-align: center; border: 2px solid #ddd;" id="tab_cout_div">23.634 €</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 15px; border: 2px solid #ddd;"><strong>Valeur extraite</strong></td>
+                            <td style="padding: 15px; text-align: center; border: 2px solid #ddd; background: #e8f5e9;" id="tab_val_al">26.647 €</td>
+                            <td style="padding: 15px; text-align: center; border: 2px solid #ddd;" id="tab_val_div">26.647 €</td>
+                        </tr>
+                        <tr style="background: #fff3cd;">
+                            <td style="padding: 15px; border: 2px solid #ddd;"><strong>RATIO (Coût / Extrait)</strong></td>
+                            <td style="padding: 15px; text-align: center; border: 2px solid #ddd; background: #e8f5e9; font-size: 1.3em;" id="tab_ratio_al"><strong style="color: #4CAF50;">44,1%</strong></td>
+                            <td style="padding: 15px; text-align: center; border: 2px solid #ddd; font-size: 1.3em;" id="tab_ratio_div"><strong style="color: #f44336;">88,7%</strong></td>
+                        </tr>
+                    </table>
+                    
+                    <div style="background: white; padding: 20px; border-radius: 10px; margin-top: 20px; border: 3px solid #4CAF50;">
+                        <p style="font-size: 1.3em; text-align: center; margin: 0;">
+                            <strong style="color: #4CAF50;">✅ L'Art Leasing coûte 44% de la somme extraite</strong><br>
+                            <strong style="color: #f44336;">❌ Les dividendes coûtent 89% de la somme extraite</strong>
+                        </p>
+                        <p style="font-size: 1.5em; text-align: center; margin: 20px 0 0 0; color: #4CAF50;">
+                            <strong>🎯 L'Art Leasing est <span id="extract2_fois">2,0x</span> plus efficace !</strong>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="info-banner">
+                    <h3>💡 Pourquoi cette différence ?</h3>
+                    <p style="line-height: 1.8; font-size: 1.05em;">
+                        <strong>🎨 Art Leasing :</strong><br>
+                        • Le surcoût de financement (<span id="info_surcout">8.400 €</span>) est partiellement compensé par les économies d'IS sur le reste du résultat<br>
+                        • Les charges de leasing sont déductibles, réduisant l'IS global de la société<br>
+                        • La taxation à la sortie est favorable (5% + 6,5% = 11,5% vs 47,5% en dividendes)<br>
+                        • <strong>Au final : 44% de coût pour extraire de la valeur</strong><br><br>
+                        
+                        <strong>💰 Dividendes :</strong><br>
+                        • Double taxation immédiate : 25% d'IS puis 30% de flat tax<br>
+                        • Aucune optimisation possible<br>
+                        • Taxation totale de 47,5% sur chaque euro distribué<br>
+                        • <strong>Au final : 89% de coût pour extraire de la valeur</strong><br><br>
+                        
+                        <strong>📊 Résultat :</strong> Pour chaque euro extrait, l'Art Leasing économise <span id="info_economie" style="color: #4CAF50; font-weight: bold;">0,45 €</span> de coût par rapport aux dividendes classiques !
+                    </p>
+                </div>
             </div>
 
             <!-- TAB 1: Résultat Nécessaire -->
@@ -713,6 +958,21 @@
                         <li><strong>Taxes dividendes économisées : <span id="ri_ecoTaxes">8.640 €</span></strong> (moins de dividendes à distribuer)</li>
                         <li><strong>Taxation favorable :</strong> 6,5% sur la plus-value vs 30% sur dividendes</li>
                     </ul>
+                </div>
+
+                <div class="info-banner">
+                    <h3>💰 Coût d'extraction du cash (avec résultat identique)</h3>
+                    <p style="line-height: 1.8;">
+                        <strong>Avec <span id="ri_cout_resultat">60.000 €</span> de résultat :</strong><br><br>
+                        
+                        🎨 <strong>Art Leasing :</strong> Coût d'extraction = <span id="ri_cout_AL">50.613 €</span> pour obtenir <span id="ri_cout_netAL">37.987 €</span> nets<br>
+                        → Ratio : <span id="ri_cout_ratioAL">1,33 €</span> de coût par euro net sorti<br><br>
+                        
+                        💰 <strong>Dividendes :</strong> Coût d'extraction = <span id="ri_cout_Div">28.500 €</span> pour obtenir <span id="ri_cout_netDiv">31.500 €</span> nets<br>
+                        → Ratio : <span id="ri_cout_ratioDiv">0,90 €</span> de coût par euro net sorti<br><br>
+                        
+                        <strong>📊 Conclusion :</strong> L'Art Leasing coûte plus cher par euro extrait, MAIS permet de sortir <strong style="color: #4CAF50;">+6.487 € de plus</strong> avec le même résultat !
+                    </p>
                 </div>
             </div>
             
@@ -871,6 +1131,10 @@
                 <div class="chart-container">
                     <canvas id="efficaciteChart"></canvas>
                 </div>
+
+                <div class="chart-container">
+                    <canvas id="coutChart"></canvas>
+                </div>
             </div>
         </div>
     </div>
@@ -932,6 +1196,39 @@
             const gainPourcent = ((gainNet / div2_netPoche) * 100).toFixed(1);
             const economieImpots2 = div2_totalImpots - art_totalImpots;
             
+            // COÛT RÉEL DE L'OPÉRATION
+            // Art Leasing : loyers + apport + rachat + taxe PV + IS + taxe dividendes
+            const cout_AL_total = chargesLeasingTotal + art_rachat + art_taxePlusValue + art_is + art_taxeDividendes;
+            const cout_AL_ratio = (cout_AL_total / art_netTotal).toFixed(2);
+            const cout_AL_pourcent = (((cout_AL_total / art_netTotal) - 1) * 100).toFixed(1);
+            
+            // Dividendes : IS + flat tax pour obtenir le même montant net
+            const cout_Div_total = div_is + div_taxeDividendes;
+            const cout_Div_ratio = (cout_Div_total / art_netTotal).toFixed(2);
+            const cout_Div_pourcent = (((cout_Div_total / art_netTotal) - 1) * 100).toFixed(1);
+            
+            const economie_cout = cout_Div_total - cout_AL_total;
+            
+            // EXTRACTION DE VALEUR : Comparaison pour extraire la valeur nette de l'œuvre
+            const valeur_extraite = art_produitRevente; // Valeur nette après rachat et taxe PV
+            
+            // ART LEASING : Coût réel d'extraction
+            const surcout_financement = (loyersTotal + apportInitial) - valeurOeuvre; // Ce qu'on paie en plus de la valeur
+            const extract2_coutAL = surcout_financement + art_rachat + art_taxePlusValue;
+            const extract2_ratioAL = ((extract2_coutAL / valeur_extraite) * 100).toFixed(1);
+            
+            // DIVIDENDES : Pour extraire la même valeur
+            const extract2_resultatDiv = Math.round(valeur_extraite / ((1 - tauxIS) * (1 - tauxDividendes)));
+            const extract2_isDiv = Math.round(extract2_resultatDiv * tauxIS);
+            const extract2_resultatNetDiv = extract2_resultatDiv - extract2_isDiv;
+            const extract2_flatTaxDiv = Math.round(extract2_resultatNetDiv * tauxDividendes);
+            const extract2_coutDiv = extract2_isDiv + extract2_flatTaxDiv;
+            const extract2_ratioDiv = ((extract2_coutDiv / valeur_extraite) * 100).toFixed(1);
+            
+            // Comparaison
+            const extract2_fois = (parseFloat(extract2_ratioDiv) / parseFloat(extract2_ratioAL)).toFixed(1);
+            const extract2_economieParEuro = ((parseFloat(extract2_ratioDiv) - parseFloat(extract2_ratioAL)) / 100).toFixed(2);
+            
             calculations = {
                 resultatTotal, loyerMensuel, loyersTotal, apportInitial, chargesLeasingTotal,
                 art_resultatImposable, art_is, art_resultatNet, art_taxeDividendes, art_dividendesNets,
@@ -939,6 +1236,12 @@
                 div_resultatNecessaire, div_is, div_resultatNet, div_taxeDividendes, div_netPoche, div_totalImpots, div_tauxPonction,
                 div2_is, div2_resultatNet, div2_taxeDividendes, div2_netPoche, div2_totalImpots,
                 economieResultat, pourcentageEconomie, economieImpots, gainNet, gainPourcent, economieImpots2,
+                cout_AL_total, cout_AL_ratio, cout_AL_pourcent,
+                cout_Div_total, cout_Div_ratio, cout_Div_pourcent,
+                economie_cout,
+                valeur_extraite, surcout_financement,
+                extract2_coutAL, extract2_ratioAL, extract2_resultatDiv, extract2_isDiv, extract2_flatTaxDiv, 
+                extract2_coutDiv, extract2_ratioDiv, extract2_fois, extract2_economieParEuro,
                 valeurOeuvre, dureeMois, tauxIS, tauxDividendes
             };
             
@@ -993,6 +1296,66 @@
             document.getElementById('synth_net2Div').textContent = formatEuro(c.div2_netPoche);
             document.getElementById('synth_gain2').textContent = formatEuro(c.gainNet);
             
+            // Coût réel de l'opération
+            document.getElementById('cout_cash').textContent = formatEuro(c.art_netTotal);
+            document.getElementById('cout_totalAL').textContent = formatEuro(c.cout_AL_total);
+            document.getElementById('cout_loyers').textContent = formatEuro(c.loyersTotal);
+            document.getElementById('cout_apport').textContent = formatEuro(c.apportInitial);
+            document.getElementById('cout_rachat').textContent = formatEuro(c.art_rachat);
+            document.getElementById('cout_taxePV').textContent = formatEuro(c.art_taxePlusValue);
+            document.getElementById('cout_isAL').textContent = formatEuro(c.art_is);
+            document.getElementById('cout_taxeDivAL').textContent = formatEuro(c.art_taxeDividendes);
+            document.getElementById('cout_cashAL').textContent = formatEuro(c.art_netTotal);
+            document.getElementById('cout_ratioAL').textContent = c.cout_AL_ratio + ' €';
+            document.getElementById('cout_ratioTextAL').textContent = `Pour sortir 1 € net, l'opération coûte ${c.cout_AL_ratio} €`;
+            
+            document.getElementById('cout_totalDiv').textContent = formatEuro(c.cout_Div_total);
+            document.getElementById('cout_isDiv').textContent = formatEuro(c.div_is);
+            document.getElementById('cout_flatTax').textContent = formatEuro(c.div_taxeDividendes);
+            document.getElementById('cout_cashDiv').textContent = formatEuro(c.art_netTotal);
+            document.getElementById('cout_ratioDiv').textContent = c.cout_Div_ratio + ' €';
+            document.getElementById('cout_ratioTextDiv').textContent = `Pour sortir 1 € net, l'opération coûte ${c.cout_Div_ratio} €`;
+            
+            document.getElementById('cout_obj').textContent = formatEuro(c.art_netTotal);
+            document.getElementById('cout_al_total').textContent = formatEuro(c.cout_AL_total);
+            document.getElementById('cout_al_ratio').textContent = c.cout_AL_ratio + ' €';
+            document.getElementById('cout_al_pourcent').textContent = c.cout_AL_pourcent + '%';
+            document.getElementById('cout_div_total').textContent = formatEuro(c.cout_Div_total);
+            document.getElementById('cout_div_ratio').textContent = c.cout_Div_ratio + ' €';
+            document.getElementById('cout_div_pourcent').textContent = c.cout_Div_pourcent + '%';
+            
+            // Section EXTRACTION 2 (nouvelle logique)
+            document.getElementById('valeur_cible').textContent = formatEuro(c.valeur_extraite);
+            document.getElementById('extract2_valeurAL').textContent = formatEuro(c.valeur_extraite);
+            document.getElementById('extract2_surcout').textContent = formatEuro(c.surcout_financement);
+            const surcoutDetail = `(${formatEuro(c.loyersTotal)} loyers + ${formatEuro(c.apportInitial)} apport) - ${formatEuro(c.valeurOeuvre)} valeur = ${formatEuro(c.surcout_financement)}`;
+            document.getElementById('extract2_surcoutDetail').textContent = surcoutDetail;
+            document.getElementById('extract2_rachat').textContent = formatEuro(c.art_rachat);
+            document.getElementById('extract2_taxePV').textContent = formatEuro(c.art_taxePlusValue);
+            document.getElementById('extract2_coutTotalAL').textContent = formatEuro(c.extract2_coutAL);
+            document.getElementById('extract2_ratioAL').textContent = c.extract2_ratioAL + '%';
+            
+            document.getElementById('extract2_valeurDiv').textContent = formatEuro(c.valeur_extraite);
+            document.getElementById('extract2_resultatDiv').textContent = formatEuro(c.extract2_resultatDiv);
+            document.getElementById('extract2_isDiv').textContent = formatEuro(c.extract2_isDiv);
+            document.getElementById('extract2_flatTax').textContent = formatEuro(c.extract2_flatTaxDiv);
+            document.getElementById('extract2_coutTotalDiv').textContent = formatEuro(c.extract2_coutDiv);
+            document.getElementById('extract2_ratioDiv').textContent = c.extract2_ratioDiv + '%';
+            
+            document.getElementById('extract2_objectif').textContent = formatEuro(c.valeur_extraite);
+            document.getElementById('tab_res_al').textContent = formatEuro(c.resultatTotal);
+            document.getElementById('tab_res_div').textContent = formatEuro(c.extract2_resultatDiv);
+            document.getElementById('tab_cout_al').textContent = formatEuro(c.extract2_coutAL);
+            document.getElementById('tab_cout_div').textContent = formatEuro(c.extract2_coutDiv);
+            document.getElementById('tab_val_al').textContent = formatEuro(c.valeur_extraite);
+            document.getElementById('tab_val_div').textContent = formatEuro(c.valeur_extraite);
+            document.getElementById('tab_ratio_al').innerHTML = `<strong style="color: #4CAF50;">${c.extract2_ratioAL}%</strong>`;
+            document.getElementById('tab_ratio_div').innerHTML = `<strong style="color: #f44336;">${c.extract2_ratioDiv}%</strong>`;
+            document.getElementById('extract2_fois').textContent = c.extract2_fois + 'x';
+            
+            document.getElementById('info_surcout').textContent = formatEuro(c.surcout_financement);
+            document.getElementById('info_economie').textContent = c.extract2_economieParEuro + ' €';
+            
             // TAB 1: Résultat nécessaire
             document.getElementById('rn_objectif').textContent = formatEuro(c.art_netTotal);
             document.getElementById('rn_resultatAL').textContent = formatEuro(c.resultatTotal);
@@ -1029,6 +1392,19 @@
             document.getElementById('ri_charges').textContent = formatEuro(c.chargesLeasingTotal);
             document.getElementById('ri_ecoIS').textContent = formatEuro(c.div2_is - c.art_is);
             document.getElementById('ri_ecoTaxes').textContent = formatEuro(c.div2_taxeDividendes - c.art_taxeDividendes);
+            
+            // Coût d'extraction pour résultat identique
+            const ri_cout_AL = c.chargesLeasingTotal + c.art_rachat + c.art_taxePlusValue + c.art_is + c.art_taxeDividendes;
+            const ri_cout_ratioAL = (ri_cout_AL / c.art_netTotal).toFixed(2);
+            const ri_cout_ratioDiv = (c.div2_totalImpots / c.div2_netPoche).toFixed(2);
+            
+            document.getElementById('ri_cout_resultat').textContent = formatEuro(c.resultatTotal);
+            document.getElementById('ri_cout_AL').textContent = formatEuro(ri_cout_AL);
+            document.getElementById('ri_cout_netAL').textContent = formatEuro(c.art_netTotal);
+            document.getElementById('ri_cout_ratioAL').textContent = ri_cout_ratioAL + ' €';
+            document.getElementById('ri_cout_Div').textContent = formatEuro(c.div2_totalImpots);
+            document.getElementById('ri_cout_netDiv').textContent = formatEuro(c.div2_netPoche);
+            document.getElementById('ri_cout_ratioDiv').textContent = ri_cout_ratioDiv + ' €';
             
             // TAB 3: Art Leasing
             document.getElementById('al_resultat').textContent = formatEuro(c.resultatTotal);
@@ -1133,6 +1509,57 @@
                         title: {
                             display: true,
                             text: `Comparaison 1 : Résultat nécessaire pour ${formatEuro(c.art_netTotal)} nets`,
+                            font: { size: 18 }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                callback: function(value) {
+                                    return value.toLocaleString() + ' €';
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+            
+            // Graphique 4: Coût d'extraction
+            const ctx4 = document.getElementById('coutChart');
+            if (ctx4.chart) ctx4.chart.destroy();
+            
+            ctx4.chart = new Chart(ctx4, {
+                type: 'bar',
+                data: {
+                    labels: ['Art Leasing', 'Dividendes'],
+                    datasets: [{
+                        label: 'Coût total extraction (€)',
+                        data: [c.extract_AL_coutTotal, c.extract_div_coutTotal],
+                        backgroundColor: ['rgba(255, 152, 0, 0.7)', 'rgba(244, 67, 54, 0.7)'],
+                        borderColor: ['#ff9800', '#f44336'],
+                        borderWidth: 2
+                    }, {
+                        label: 'Valeur nette extraite (€)',
+                        data: [c.valeur_extraite, c.valeur_extraite],
+                        backgroundColor: ['rgba(76, 175, 80, 0.7)', 'rgba(76, 175, 80, 0.7)'],
+                        borderColor: ['#4CAF50', '#4CAF50'],
+                        borderWidth: 2
+                    }, {
+                        label: 'Résultat nécessaire (€)',
+                        data: [c.resultatTotal, c.extract_div_resultatNecessaire],
+                        backgroundColor: ['rgba(33, 150, 243, 0.7)', 'rgba(156, 39, 176, 0.7)'],
+                        borderColor: ['#2196F3', '#9c27b0'],
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: `Extraction de ${formatEuro(c.valeur_extraite)} : Coût vs Résultat nécessaire`,
                             font: { size: 18 }
                         }
                     },
